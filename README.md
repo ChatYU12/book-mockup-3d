@@ -5,7 +5,9 @@
 
 ## 打开
 
-双击 `index.html` 即可，不需要联网、不需要装任何东西、不需要起本地服务器。
+**在线预览：https://chatyu12.github.io/book-mockup-3d/**（GitHub Pages，打开就能用）
+
+或者双击 `index.html`——不需要联网、不需要装任何东西、不需要起本地服务器。
 three.js 已经内嵌在这个文件里（约 716 KB），图片全程只在浏览器内存里处理，不会上传到任何地方。
 
 支持 Chrome / Edge / Safari 最新版。
