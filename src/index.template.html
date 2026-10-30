@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>书模台 · 教材封面 3D 打样</title>
+<style>/*__CSS__*/</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="tick"></span>
+    <h1>书模台</h1>
+    <span class="sub">封面 3D 打样</span>
+  </div>
+  <div class="spec">
+    <span>开本 <b>185 × 260 × 10</b> mm</span>
+    <span class="note">10 mm ≈ 100 张 80g 纸 ≈ 200 面</span>
+  </div>
+</header>
+
+<aside class="panel" id="panel">
+
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">01</span>
+      <h2>平面图</h2>
+      <span class="aside" id="uploadAside">未上传</span>
+    </div>
+
+    <div class="drops">
+      <label class="drop" id="dropCover" data-kind="cover">
+        <input type="file" accept="image/png,image/jpeg" id="fileCover">
+        <span class="drop-thumb empty" id="thumbCover"></span>
+        <span class="drop-name">封面 <span class="mm">185 × 260 mm</span></span>
+        <span class="drop-meta" id="metaCover">拖入或点击选择</span>
+      </label>
+
+      <label class="drop" id="dropSpine" data-kind="spine">
+        <input type="file" accept="image/png,image/jpeg" id="fileSpine">
+        <span class="drop-thumb empty" id="thumbSpine"></span>
+        <span class="drop-name">书脊 <span class="mm">10 × 260 mm</span></span>
+        <span class="drop-meta" id="metaSpine">拖入或点击选择</span>
+      </label>
+    </div>
+
+    <p class="foot-hint">请上传已裁到成品尺寸的图，不要带出血线或裁切线。两张图在接缝处的图案要能接上。</p>
+
+    <div class="warn" id="spineWarn" hidden>
+      <p class="warn-title">书脊图比例不是 10 : 260</p>
+      <p class="warn-body" id="spineWarnBody"></p>
+      <div class="warn-actions">
+        <label class="radio">
+          <input type="radio" name="spineMode" value="crop" checked>
+          <span>等比缩放并居中裁切（推荐）</span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="spineMode" value="stretch">
+          <span>拉伸填满，图案会变形</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">02</span>
+      <h2>视角</h2>
+      <span class="aside">可拖拽自由旋转</span>
+    </div>
+    <div class="presets" id="presets">
+      <button class="preset" data-preset="front" aria-pressed="true">
+        <span class="p-name">正面平视</span><span class="p-deg">0° / 3°</span>
+      </button>
+      <button class="preset" data-preset="left30" aria-pressed="false">
+        <span class="p-name">左前 30°</span><span class="p-deg">−30° / 6°</span>
+      </button>
+      <button class="preset" data-preset="left45" aria-pressed="false">
+        <span class="p-name">左前 45° 略俯</span><span class="p-deg">−45° / 20°</span>
+      </button>
+      <button class="preset" data-preset="table" aria-pressed="false">
+        <span class="p-name">平放台面</span><span class="p-deg">−22° / 42°</span>
+      </button>
+      <button class="preset" data-preset="stack2" aria-pressed="false">
+        <span class="p-name">堆叠两本</span><span class="p-deg">−18° / 40°</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">03</span>
+      <h2>背景</h2>
+      <span class="aside" id="bgAside">透明</span>
+    </div>
+    <div class="bgs" id="bgs">
+      <button class="bg" data-bg="none" aria-pressed="true">
+        <span class="sw sw-none"></span><span class="lb">透明</span>
+      </button>
+      <button class="bg" data-bg="studio" aria-pressed="false">
+        <span class="sw sw-studio"></span><span class="lb">浅灰影棚</span>
+      </button>
+      <button class="bg" data-bg="white" aria-pressed="false">
+        <span class="sw sw-white"></span><span class="lb">纯白无缝</span>
+      </button>
+      <button class="bg" data-bg="wood" aria-pressed="false">
+        <span class="sw sw-wood"></span><span class="lb">木质桌面</span>
+      </button>
+      <button class="bg" data-bg="gradient" aria-pressed="false">
+        <span class="sw sw-gradient"></span><span class="lb">浅色渐变</span>
+      </button>
+      <button class="bg" data-bg="custom" aria-pressed="false">
+        <span class="sw sw-custom" id="swCustom"></span><span class="lb">自定义图</span>
+      </button>
+    </div>
+    <input type="file" accept="image/png,image/jpeg" id="fileBg" hidden>
+  </section>
+
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">04</span>
+      <h2>导出</h2>
+    </div>
+    <div class="field">
+      <label for="longEdge">长边</label>
+      <select class="select" id="longEdge">
+        <option value="2000">2000 px</option>
+        <option value="3000" selected>3000 px</option>
+        <option value="4000">4000 px</option>
+      </select>
+    </div>
+    <button class="export-btn" id="exportBtn" disabled>
+      <span id="exportLabel">导出透明 PNG</span>
+      <span class="k" id="exportSize">—</span>
+    </button>
+    <p class="export-note" id="exportNote">透明背景可直接拖进 PPT，接触阴影以 alpha 呈现。</p>
+  </section>
+
+</aside>
+
+<main class="stage transparent" id="stage">
+  <canvas id="view"></canvas>
+
+  <div class="empty-state" id="emptyState">
+    <div class="es-frame"></div>
+    <div class="es-title">先放一张封面</div>
+    <div class="es-body">左侧拖入封面与书脊两张平面图<br>立刻生成 185 × 260 × 10 mm 的书模</div>
+  </div>
+
+  <div class="stage-badge" id="stageBadge" hidden>
+    <span class="lamp"></span><span id="badgeText">—</span>
+  </div>
+
+  <div class="stage-hint">
+    <span>拖拽旋转</span><span class="dot">·</span>
+    <span>滚轮缩放</span><span class="dot">·</span>
+    <span id="viewAngle">—</span>
+  </div>
+
+  <div class="toasts" id="toasts"></div>
+</main>
+
+<script>/*__THREE__*/</script>
+<script>/*__APP__*/</script>
+</body>
+</html>
